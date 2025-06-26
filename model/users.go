@@ -59,7 +59,6 @@ func Login(user Profile) (Profile, error) {
 	return dbUser, nil
 }
 func FindAllUser(search string) []Profile {
-
 	conn, err := utils.DBConnect()
 	defer func() {
 		conn.Conn().Close(context.Background())
