@@ -4,5 +4,5 @@ import "github.com/gin-gonic/gin"
 
 func CombineRouter(r *gin.Engine) {
 	authRoute(r.Group("/auth"))
-	userRoute(r.Group("/users"))
+	pinRoute(r.Group("/auth/pin"))
 }

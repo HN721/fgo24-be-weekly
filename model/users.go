@@ -84,12 +84,14 @@ func CreatePin(pinUser PinUser) error {
 	conn, err := utils.DBConnect()
 	defer conn.Conn().Close(context.Background())
 	if err != nil {
+		fmt.Println("error ini")
 		return err
 	}
 	_, err = conn.Exec(
 		context.Background(),
-		`INSERT INTO users (pin, id_user) VALUES ($1, $2)`, pinUser.Pin, pinUser.UserId,
+		`INSERT INTO pin (pin, id_user) VALUES ($1, $2)`, pinUser.Pin, pinUser.UserId,
 	)
+	fmt.Println("err")
 	return err
 
 }

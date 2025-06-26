@@ -85,5 +85,27 @@ func RegisterController(ctx *gin.Context) {
 	})
 }
 func PinController(ctx *gin.Context) {
+	var pin model.PinUser
+
+	err := ctx.ShouldBindJSON(&pin)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, model.Response{
+			Success: false,
+			Message: "Invalid Cannot Bind Js",
+		})
+		return
+	}
+	err = model.CreatePin(pin)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, model.Response{
+			Success: false,
+			Message: "Invalid Pin",
+		})
+		return
+	}
+	ctx.JSON(http.StatusOK, model.Response{
+		Success: true,
+		Message: "Sucess create Pin",
+	})
 
 }
