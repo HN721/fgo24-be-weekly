@@ -1,27 +1,14 @@
 package middleware
 
 import (
+	"net/http"
 	"os"
-	"time"
+	"strings"
 
+	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/joho/godotenv"
 )
-
-func CreateToken(username string) (string, error) {
-	godotenv.Load()
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256,
-		jwt.MapClaims{
-			"id":       username,
-			"username": username,
-			"exp":      time.Now().Add(time.Hour * 24).Unix(),
-		})
-	tokenString, err := token.SignedString([]byte(os.Getenv("SECRET_KEY")))
-	if err != nil {
-		return "", nil
-	}
-	return tokenString, nil
-}
 
 func VerifyToken(tokens string) (*jwt.Token, error) {
 	godotenv.Load()
@@ -33,6 +20,38 @@ func VerifyToken(tokens string) (*jwt.Token, error) {
 		return []byte(os.Getenv("SECRET_KEY")), nil
 	})
 }
-func AuthMiddleware() {
+func AuthMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		authHeader := c.GetHeader("Authorization")
+		if authHeader == "" {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+				"error": "Authorization header required",
+			})
+			return
+		}
 
+		splitToken := strings.Split(authHeader, " ")
+		if len(splitToken) != 2 || splitToken[0] != "Bearer" {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+				"error": "Invalid authorization format",
+			})
+			return
+		}
+
+		tokenStr := splitToken[1]
+		token, err := VerifyToken(tokenStr)
+		if err != nil || !token.Valid {
+			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+				"error": "Invalid or expired token",
+			})
+			return
+		}
+
+		if claims, ok := token.Claims.(jwt.MapClaims); ok {
+			c.Set("userID", claims["id"])
+			c.Set("username", claims["username"])
+		}
+
+		c.Next()
+	}
 }

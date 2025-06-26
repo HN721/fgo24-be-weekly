@@ -15,7 +15,7 @@ func CreateToken(username string, id int) (string, error) {
 	godotenv.Load()
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256,
 		jwt.MapClaims{
-			"id":       username,
+			"id":       id,
 			"username": username,
 			"exp":      time.Now().Add(time.Hour * 24).Unix(),
 		})
