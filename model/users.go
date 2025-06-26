@@ -19,6 +19,7 @@ type Response struct {
 	Success bool   `json:"success"`
 	Message string `json:"message"`
 	Results any    `json:"results,omiempty"`
+	Token   any    `json:"token,omiempty"`
 }
 
 func Register(user Profile) error {
