@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"weekly1/utils"
+
+	"github.com/jackc/pgx/v5"
 )
 
 type Profile struct {
@@ -13,14 +15,23 @@ type Profile struct {
 	Images   string `json:"images"`
 	Password string `json:"password"`
 }
+type Response struct {
+	Success bool   `json:"success"`
+	Message string `json:"message"`
+	Results any    `json:"results,omiempty"`
+}
 
 func Register(user Profile) error {
 	conn, err := utils.DBConnect()
 	defer conn.Conn().Close(context.Background())
 	if err != nil {
-
+		return err
 	}
-	_, err = conn.Exec(context.Background(), `INSERT INTO users (name,email,images,pasword)`, user.Name, user.Email, user.Images, user.Password)
+	_, err = conn.Exec(
+		context.Background(),
+		`INSERT INTO users (name, email, images, password) VALUES ($1, $2, $3, $4)`,
+		user.Name, user.Email, user.Images, user.Password,
+	)
 	return err
 }
 func Login(user Profile) (Profile, error) {
@@ -46,4 +57,21 @@ func Login(user Profile) (Profile, error) {
 	}
 
 	return dbUser, nil
+}
+func FindAllUser(search string) []Profile {
+
+	conn, err := utils.DBConnect()
+	defer func() {
+		conn.Conn().Close(context.Background())
+	}()
+	if err != nil {
+
+	}
+	rows, err := conn.Query(
+		context.Background(), `SELECT * FROM users WHERE username ILIKE $1`, fmt.Sprintf("%%%s%%", search))
+	users, err := pgx.CollectRows[Profile](rows, pgx.RowToStructByName)
+	if err != nil {
+
+	}
+	return users
 }
