@@ -84,3 +84,6 @@ func RegisterController(ctx *gin.Context) {
 		Results: input,
 	})
 }
+func PinController(ctx *gin.Context) {
+
+}

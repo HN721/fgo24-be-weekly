@@ -15,6 +15,11 @@ type Profile struct {
 	Images   string `json:"images"`
 	Password string `json:"password"`
 }
+type PinUser struct {
+	Id     int `json:"id"`
+	UserId int `json:"userId"`
+	Pin    int `json:"pin"`
+}
 type Response struct {
 	Success bool   `json:"success"`
 	Message string `json:"message"`
@@ -74,4 +79,17 @@ func FindAllUser(search string) []Profile {
 
 	}
 	return users
+}
+func CreatePin(pinUser PinUser) error {
+	conn, err := utils.DBConnect()
+	defer conn.Conn().Close(context.Background())
+	if err != nil {
+		return err
+	}
+	_, err = conn.Exec(
+		context.Background(),
+		`INSERT INTO users (pin, id_user) VALUES ($1, $2)`, pinUser.Pin, pinUser.UserId,
+	)
+	return err
+
 }
