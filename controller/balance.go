@@ -7,8 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func TopUpController(ctx *gin.Context) {
-	var input model.Balance
+func BalanceController(ctx *gin.Context) {
+	var input model.Balances
 	err := ctx.ShouldBindJSON(&input)
 
 	if err != nil {
@@ -18,7 +18,7 @@ func TopUpController(ctx *gin.Context) {
 		})
 		return
 	}
-	err = model.TopUp(input)
+	err = model.Balance(input)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, model.Response{
 			Success: false,
