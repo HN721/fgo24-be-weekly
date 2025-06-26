@@ -8,7 +8,7 @@ import (
 type Balance struct {
 	IdUser int    `json:"idUser"`
 	Saldo  int    `json:"saldo"`
-	Date   string `json:"json"`
+	Date   string `json:"date"`
 }
 
 func TopUp(balanceUser Balance) error {
@@ -17,7 +17,7 @@ func TopUp(balanceUser Balance) error {
 	if err != nil {
 		return err
 	}
-	_, err = conn.Exec(context.Background(), `INSERT INTO pin (saldo,last_updated, id_user) VALUES ($1, $2,$3)`, balanceUser.Saldo, balanceUser.Date, balanceUser.IdUser)
+	_, err = conn.Exec(context.Background(), `INSERT INTO balance (saldo,last_updated, id_user) VALUES ($1, $2,$3)`, balanceUser.Saldo, balanceUser.Date, balanceUser.IdUser)
 
 	return err
 }
