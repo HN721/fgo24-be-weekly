@@ -9,6 +9,6 @@ import (
 
 func transactionRoute(r *gin.RouterGroup) {
 	r.POST("/createTransaction", middleware.AuthMiddleware(), controller.CreateTransactionsController)
-	r.GET("/findTransaction", middleware.AuthMiddleware(), controller.GetUserTransactionController)
+	r.GET("/findTransactions", middleware.AuthMiddleware(), controller.GetUserTransactionController)
 
 }

@@ -16,6 +16,7 @@ func CreateHistory(ctx *gin.Context) {
 			Success: false,
 			Message: "Invalid Input",
 		})
+		return
 	}
 	err = model.CreateHistory(input)
 	if err != nil {
@@ -23,6 +24,7 @@ func CreateHistory(ctx *gin.Context) {
 			Success: false,
 			Message: "Cannot Insert Data",
 		})
+		return
 	}
 	ctx.JSON(http.StatusOK, model.Response{
 		Success: true,
@@ -35,7 +37,7 @@ func Gethistory(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, model.Response{
 			Success: false,
-			Message: "Failed to retrieve history: " + err.Error(),
+			Message: "Fail to retrieve history: " + err.Error(),
 		})
 		return
 	}

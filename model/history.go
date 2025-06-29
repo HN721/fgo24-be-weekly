@@ -35,7 +35,7 @@ func GetAllHistory() ([]Historymodel, error) {
 	}
 	defer conn.Conn().Close(context.Background())
 
-	query := `
+	querys := `
 		SELECT 
 			h.id AS id_history,
 			t.id AS id_transaction,
@@ -47,7 +47,7 @@ func GetAllHistory() ([]Historymodel, error) {
 		JOIN transaction t ON h.id_transaction = t.id
 	`
 
-	rows, err := conn.Query(context.Background(), query)
+	rows, err := conn.Query(context.Background(), querys)
 	if err != nil {
 		return nil, err
 	}
