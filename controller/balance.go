@@ -18,7 +18,7 @@ func BalanceController(ctx *gin.Context) {
 		})
 		return
 	}
-	userId, _ := ctx.Get("userId")
+	userId, _ := ctx.Get("userID")
 
 	err = model.Balance(userId.(int), input)
 	if err != nil {
