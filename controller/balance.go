@@ -18,7 +18,9 @@ func BalanceController(ctx *gin.Context) {
 		})
 		return
 	}
-	err = model.Balance(input)
+	userId, _ := ctx.Get("userId")
+
+	err = model.Balance(userId.(int), input)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, model.Response{
 			Success: false,
@@ -33,6 +35,8 @@ func BalanceController(ctx *gin.Context) {
 }
 func TopUpController(ctx *gin.Context) {
 	var top model.TopUps
+	userId, _ := ctx.Get("userID")
+
 	err := ctx.ShouldBindJSON(&top)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, model.Response{
@@ -41,7 +45,7 @@ func TopUpController(ctx *gin.Context) {
 		})
 		return
 	}
-	err = model.TopUp(top)
+	err = model.TopUp(userId.(int), top)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, model.Response{
 			Success: false,
