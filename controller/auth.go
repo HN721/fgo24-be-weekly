@@ -137,3 +137,38 @@ func GetUser(ctx *gin.Context) {
 		Results: users,
 	})
 }
+func UpdateProfileController(ctx *gin.Context) {
+	userIDVal, exists := ctx.Get("userID")
+	if !exists {
+		ctx.JSON(http.StatusUnauthorized, model.Response{
+			Success: false,
+			Message: "Unauthorized: user ID not found",
+		})
+		return
+	}
+	userID := userIDVal.(int)
+
+	var input model.PublicProfile
+	if err := ctx.ShouldBindJSON(&input); err != nil {
+		ctx.JSON(http.StatusBadRequest, model.Response{
+			Success: false,
+			Message: "Invalid input",
+		})
+		return
+	}
+
+	err := model.UpdateProfile(userID, input)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, model.Response{
+			Success: false,
+			Message: "Failed to update profile: " + err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, model.Response{
+		Success: true,
+		Message: "Profile updated successfully",
+		Results: input,
+	})
+}

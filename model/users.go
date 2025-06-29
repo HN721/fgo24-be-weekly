@@ -15,6 +15,12 @@ type Profile struct {
 	Images   string `json:"images"`
 	Password string `json:"password"`
 }
+type PublicProfile struct {
+	ID     int    `json:"id"`
+	Name   string `json:"name"`
+	Email  string `json:"email"`
+	Images string `json:"images"`
+}
 type PinUser struct {
 	Id     int `json:"id"`
 	UserId int `json:"userId"`
@@ -103,4 +109,19 @@ func CreatePin(id int, pinUser PinUser) error {
 	fmt.Println("err")
 	return err
 
+}
+func UpdateProfile(userID int, input PublicProfile) error {
+	conn, err := utils.DBConnect()
+	if err != nil {
+		return err
+	}
+	defer conn.Conn().Close(context.Background())
+
+	_, err = conn.Exec(context.Background(), `
+		UPDATE users 
+		SET name = $1, email = $2, images = $3
+		WHERE id = $4
+	`, input.Name, input.Email, input.Images, userID)
+
+	return err
 }
