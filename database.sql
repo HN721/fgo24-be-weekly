@@ -43,3 +43,8 @@ CREATE TABLE transaction (
     method VARCHAR(255),
     id_user int REFERENCES users (id) ON DELETE CASCADE
 );
+
+CREATE TABLE history (
+    id SERIAL PRIMARY KEY,
+    id_transaction int REFERENCES transaction (id) ON DELETE CASCADE
+)

@@ -78,9 +78,9 @@ func RegisterController(ctx *gin.Context) {
 		})
 		return
 	}
-	ctx.JSON(http.StatusOK, model.Response{
+	ctx.JSON(http.StatusCreated, model.Response{
 		Success: true,
-		Message: "Sucessfully",
+		Message: "Sucessfully ",
 		Results: input,
 	})
 }
@@ -95,7 +95,8 @@ func PinController(ctx *gin.Context) {
 		})
 		return
 	}
-	err = model.CreatePin(pin)
+	userId, _ := ctx.Get("userID")
+	err = model.CreatePin(userId.(int), pin)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, model.Response{
 			Success: false,
@@ -103,9 +104,36 @@ func PinController(ctx *gin.Context) {
 		})
 		return
 	}
-	ctx.JSON(http.StatusOK, model.Response{
+	ctx.JSON(http.StatusCreated, model.Response{
 		Success: true,
 		Message: "Sucess create Pin",
 	})
 
+}
+
+func GetUser(ctx *gin.Context) {
+	search := ctx.DefaultQuery("search", "")
+
+	users, err := model.FindAllUser(search)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, model.Response{
+			Success: false,
+			Message: "Failed to search users: " + err.Error(),
+		})
+		return
+	}
+
+	if len(users) == 0 {
+		ctx.JSON(http.StatusNotFound, model.Response{
+			Success: false,
+			Message: "No user found",
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, model.Response{
+		Success: true,
+		Message: "Successfully found users",
+		Results: users,
+	})
 }

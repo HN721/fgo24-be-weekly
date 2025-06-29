@@ -13,23 +13,24 @@ type Balances struct {
 	Date   string `json:"date"`
 }
 type TopUps struct {
-	Amount int
+	Amount int `json:"amount"`
 	UserID int
-	Date   time.Time
+	Date   time.Time `json:"date"`
 }
 
-func Balance(balanceUser Balances) error {
+func Balance(id int, balanceUser Balances) error {
 	conn, err := utils.DBConnect()
 	defer conn.Conn().Close(context.Background())
 
 	if err != nil {
 		return err
 	}
+	balanceUser.IdUser = id
 	_, err = conn.Exec(context.Background(), `INSERT INTO balance (saldo,last_updated, id_user) VALUES ($1, $2,$3)`, balanceUser.Saldo, balanceUser.Date, balanceUser.IdUser)
 
 	return err
 }
-func TopUp(topup TopUps) error {
+func TopUp(id int, topup TopUps) error {
 	conn, err := utils.DBConnect()
 	if err != nil {
 		return fmt.Errorf("failed to connect to database: %w", err)
@@ -40,6 +41,7 @@ func TopUp(topup TopUps) error {
 		return fmt.Errorf("failed to begin transaction: %w", err)
 	}
 	defer tx.Rollback(context.Background())
+	topup.UserID = id
 	_, err = tx.Exec(context.Background(),
 		`INSERT INTO topup (amount, date_transactions, id_user)
          VALUES ($1, $2, $3)`,

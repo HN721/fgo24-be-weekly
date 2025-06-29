@@ -15,14 +15,16 @@ type Transactions struct {
 	IdUser int    `json:"id_user"`
 }
 
-func CreateTransactions(trans Transactions) error {
+func CreateTransactions(id int, trans Transactions) error {
 	conn, err := utils.DBConnect()
 	if err != nil {
 		return err
 	}
+	trans.IdUser = id
 	_, err = conn.Exec(context.Background(), `INSERT INTO transaction (amount,status,date_transaction,method,id_user)VALUES(
 		$1, $2,$3,$4,$5
 	)`, trans.Amount, trans.Status, trans.Date, trans.Method, trans.IdUser)
+	defer conn.Conn().Close(context.Background())
 
 	return err
 }

@@ -23,8 +23,8 @@ type PinUser struct {
 type Response struct {
 	Success bool   `json:"success"`
 	Message string `json:"message"`
-	Results any    `json:"results,omiempty"`
-	Token   any    `json:"token,omiempty"`
+	Results any    `json:"results,omitempty"`
+	Token   string `json:"token,omitempty"`
 }
 
 func Register(user Profile) error {
@@ -64,29 +64,38 @@ func Login(user Profile) (Profile, error) {
 
 	return dbUser, nil
 }
-func FindAllUser(search string) []Profile {
+func FindAllUser(search string) ([]Profile, error) {
 	conn, err := utils.DBConnect()
-	defer func() {
-		conn.Conn().Close(context.Background())
-	}()
 	if err != nil {
-
+		return nil, err
 	}
+	defer conn.Conn().Close(context.Background())
+
 	rows, err := conn.Query(
-		context.Background(), `SELECT * FROM users WHERE username ILIKE $1`, fmt.Sprintf("%%%s%%", search))
+		context.Background(),
+		`SELECT id, name, email, images,password FROM users WHERE name ILIKE $1`,
+		fmt.Sprintf("%%%s%%", search),
+	)
+	if err != nil {
+		fmt.Println("QUERY ERROR:", err)
+		return nil, err
+	}
+
 	users, err := pgx.CollectRows[Profile](rows, pgx.RowToStructByName)
 	if err != nil {
-
+		return nil, err
 	}
-	return users
+	return users, nil
 }
-func CreatePin(pinUser PinUser) error {
+
+func CreatePin(id int, pinUser PinUser) error {
 	conn, err := utils.DBConnect()
 	defer conn.Conn().Close(context.Background())
 	if err != nil {
 		fmt.Println("error ini")
 		return err
 	}
+	pinUser.UserId = id
 	_, err = conn.Exec(
 		context.Background(),
 		`INSERT INTO pin (pin, id_user) VALUES ($1, $2)`, pinUser.Pin, pinUser.UserId,

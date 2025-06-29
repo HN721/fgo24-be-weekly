@@ -9,4 +9,5 @@ import (
 func authRoute(r *gin.RouterGroup) {
 	r.POST("/register", controller.RegisterController)
 	r.POST("/login", controller.LoginController)
+	r.GET("/get-user", controller.GetUser)
 }
