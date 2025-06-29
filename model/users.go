@@ -21,6 +21,10 @@ type PublicProfile struct {
 	Email  string `json:"email"`
 	Images string `json:"images"`
 }
+type ChangePasswordInput struct {
+	OldPassword string `json:"old_password"`
+	NewPassword string `json:"new_password"`
+}
 type PinUser struct {
 	Id     int `json:"id"`
 	UserId int `json:"userId"`
@@ -124,4 +128,30 @@ func UpdateProfile(userID int, input PublicProfile) error {
 	`, input.Name, input.Email, input.Images, userID)
 
 	return err
+}
+func ChangePassword(userID int, oldPass, newPass string) error {
+	conn, err := utils.DBConnect()
+	if err != nil {
+		return err
+	}
+	defer conn.Conn().Close(context.Background())
+
+	var currentPassword string
+	err = conn.QueryRow(context.Background(),
+		`SELECT password FROM users WHERE id = $1`, userID).Scan(&currentPassword)
+	if err != nil {
+		return fmt.Errorf("user not found or error reading password")
+	}
+
+	if currentPassword != oldPass {
+		return fmt.Errorf("old password is incorrect")
+	}
+
+	_, err = conn.Exec(context.Background(),
+		`UPDATE users SET password = $1 WHERE id = $2`, newPass, userID)
+	if err != nil {
+		return fmt.Errorf("failed to update password")
+	}
+
+	return nil
 }
