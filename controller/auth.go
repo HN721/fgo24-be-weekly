@@ -172,3 +172,37 @@ func UpdateProfileController(ctx *gin.Context) {
 		Results: input,
 	})
 }
+func ChangePasswordController(ctx *gin.Context) {
+	userIDVal, exists := ctx.Get("userID")
+	if !exists {
+		ctx.JSON(http.StatusUnauthorized, model.Response{
+			Success: false,
+			Message: "Unauthorized",
+		})
+		return
+	}
+	userID := userIDVal.(int)
+
+	var input model.ChangePasswordInput
+	if err := ctx.ShouldBindJSON(&input); err != nil {
+		ctx.JSON(http.StatusBadRequest, model.Response{
+			Success: false,
+			Message: "Invalid input",
+		})
+		return
+	}
+
+	err := model.ChangePassword(userID, input.OldPassword, input.NewPassword)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, model.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, model.Response{
+		Success: true,
+		Message: "Password changed successfully",
+	})
+}
