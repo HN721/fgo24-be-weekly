@@ -46,12 +46,14 @@ go run main.go
 
 ### Profile
 
-| Method | Endpoint                 | Description           |
-| ------ | ------------------------ | --------------------- |
-| GET    | `/user/get-user`         | Get user data         |
-| GET    | `/user/get-user?search=` | Get user data by name |
-| PUT    | `/user/profile`          | Update user data      |
-| PUT    | `/user/change-password`  | Update Password user  |
+| Method | Endpoint                            | Description            |
+| ------ | ----------------------------------- | ---------------------- |
+| GET    | `/user`                             | Get user data          |
+| GET    | `/user/:id`                         | Get user data by id    |
+| GET    | `/user/email?email=nanda@gmail.com` | Get user data by email |
+| GET    | `/user?search=`                     | Get user data by name  |
+| PUT    | `/user/profile`                     | Update user data       |
+| PUT    | `/user/change-password`             | Update Password user   |
 
 ### Balance
 
