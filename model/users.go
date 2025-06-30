@@ -4,8 +4,6 @@ import (
 	"context"
 	"fmt"
 	"weekly1/utils"
-
-	"github.com/jackc/pgx/v5"
 )
 
 type Profile struct {
@@ -74,27 +72,36 @@ func Login(user Profile) (Profile, error) {
 
 	return dbUser, nil
 }
-func FindAllUser(search string) ([]Profile, error) {
+func FindAllUser(search string, limit, offset int) ([]Profile, error) {
 	conn, err := utils.DBConnect()
 	if err != nil {
 		return nil, err
 	}
 	defer conn.Conn().Close(context.Background())
 
-	rows, err := conn.Query(
-		context.Background(),
-		`SELECT id, name, email, images,password FROM users WHERE name ILIKE $1`,
-		fmt.Sprintf("%%%s%%", search),
-	)
+	query := `
+		SELECT id, name, email, images 
+		FROM users 
+		WHERE name ILIKE '%' || $1 || '%' 
+		ORDER BY id 
+		LIMIT $2 OFFSET $3
+	`
+
+	rows, err := conn.Query(context.Background(), query, search, limit, offset)
 	if err != nil {
-		fmt.Println("QUERY ERROR:", err)
 		return nil, err
+	}
+	defer rows.Close()
+
+	var users []Profile
+	for rows.Next() {
+		var u Profile
+		if err := rows.Scan(&u.Id, &u.Name, &u.Email, &u.Images); err != nil {
+			return nil, err
+		}
+		users = append(users, u)
 	}
 
-	users, err := pgx.CollectRows[Profile](rows, pgx.RowToStructByName)
-	if err != nil {
-		return nil, err
-	}
 	return users, nil
 }
 
