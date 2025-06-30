@@ -52,8 +52,8 @@ go run main.go
 | GET    | `/user/:id`                         | Get user data by id    |
 | GET    | `/user/email?email=nanda@gmail.com` | Get user data by email |
 | GET    | `/user?search=`                     | Get user data by name  |
-| PUT    | `/user/profile`                     | Update user data       |
-| PUT    | `/user/change-password`             | Update Password user   |
+| PATCH  | `/user/profile`                     | Update user data       |
+| PATCH  | `/user/change-password`             | Update Password user   |
 
 ### Balance
 
