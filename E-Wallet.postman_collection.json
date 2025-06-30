@@ -264,7 +264,7 @@
 				{
 					"name": "UpdateProfile",
 					"request": {
-						"method": "PUT",
+						"method": "PATCH",
 						"header": [
 							{
 								"key": "Authorization",
@@ -299,7 +299,7 @@
 				{
 					"name": "ChangePassword",
 					"request": {
-						"method": "PUT",
+						"method": "PATCH",
 						"header": [
 							{
 								"key": "Authorization",
@@ -378,6 +378,26 @@
 							"path": [
 								"user",
 								"email"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user/upload-image",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"upload-image"
 							]
 						}
 					},
