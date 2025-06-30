@@ -7,11 +7,11 @@ import (
 )
 
 type Profile struct {
-	Id       int    `json:"id" form:"id" required`
-	Name     string `json:"name"`
-	Email    string `json:"email"`
-	Images   string `json:"images"`
-	Password string `json:"password"`
+	Id       int    `json:"id" form:"id" `
+	Name     string `json:"name" form:"name" binding:"required"`
+	Email    string `json:"email" form:"email" binding:"required,email"`
+	Images   string `json:"images" form:"images" binding:"required"`
+	Password string `json:"password" form:"password" binding:"required,min=6"`
 }
 type PublicProfile struct {
 	ID     int    `json:"id"`
@@ -20,13 +20,13 @@ type PublicProfile struct {
 	Images string `json:"images"`
 }
 type ChangePasswordInput struct {
-	OldPassword string `json:"old_password"`
-	NewPassword string `json:"new_password"`
+	OldPassword string `json:"old_password" form:"old_password" binding:"required"`
+	NewPassword string `json:"new_password" form:"new_password" binding:"required,min=6"`
 }
 type PinUser struct {
 	Id     int `json:"id"`
-	UserId int `json:"userId"`
-	Pin    int `json:"pin"`
+	UserId int `json:"userId" form:"userId" binding:"required"`
+	Pin    int `json:"pin" form:"pin" binding:"required,numeric"`
 }
 type Response struct {
 	Success bool   `json:"success"`
