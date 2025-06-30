@@ -104,6 +104,39 @@ func FindAllUser(search string, limit, offset int) ([]Profile, error) {
 
 	return users, nil
 }
+func FindOneUserById(id int) (Profile, error) {
+	conn, err := utils.DBConnect()
+	if err != nil {
+		return Profile{}, err
+	}
+	defer conn.Conn().Close(context.Background())
+
+	var user Profile
+	query := `SELECT id, name, email, images FROM users WHERE id = $1`
+	err = conn.QueryRow(context.Background(), query, id).Scan(&user.Id, &user.Name, &user.Email, &user.Images)
+	if err != nil {
+		return Profile{}, err
+	}
+
+	return user, nil
+}
+
+func FindOneUserByEmail(email string) (Profile, error) {
+	conn, err := utils.DBConnect()
+	if err != nil {
+		return Profile{}, err
+	}
+	defer conn.Conn().Close(context.Background())
+
+	var user Profile
+	query := `SELECT id, name, email, images FROM users WHERE email = $1`
+	err = conn.QueryRow(context.Background(), query, email).Scan(&user.Id, &user.Name, &user.Email, &user.Images)
+	if err != nil {
+		return Profile{}, err
+	}
+
+	return user, nil
+}
 
 func CreatePin(id int, pinUser PinUser) error {
 	conn, err := utils.DBConnect()

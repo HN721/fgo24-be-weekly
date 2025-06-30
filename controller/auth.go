@@ -148,6 +148,77 @@ func GetUser(ctx *gin.Context) {
 		Results: users,
 	})
 }
+func GetUserById(ctx *gin.Context) {
+	userIdValue, exists := ctx.Get("userID")
+	if !exists {
+		ctx.JSON(http.StatusUnauthorized, model.Response{
+			Success: false,
+			Message: "Unauthorized: userID not found in context",
+		})
+		return
+	}
+
+	userIdStr, ok := userIdValue.(string)
+	if !ok {
+		ctx.JSON(http.StatusBadRequest, model.Response{
+			Success: false,
+			Message: "Invalid userID format",
+		})
+		return
+	}
+
+	id, err := strconv.Atoi(userIdStr)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, model.Response{
+			Success: false,
+			Message: "Invalid userID value",
+		})
+		return
+	}
+
+	user, err := model.FindOneUserById(id)
+	if err != nil {
+		ctx.JSON(http.StatusNotFound, model.Response{
+			Success: false,
+			Message: "User not found",
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, model.Response{
+		Success: true,
+		Message: "User found",
+		Results: user,
+	})
+}
+
+// GET /users/email?email=nanda@gmail.com
+func GetUserByEmail(ctx *gin.Context) {
+	email := ctx.Query("email")
+	if email == "" {
+		ctx.JSON(http.StatusBadRequest, model.Response{
+			Success: false,
+			Message: "Email is required",
+		})
+		return
+	}
+
+	user, err := model.FindOneUserByEmail(email)
+	if err != nil {
+		ctx.JSON(http.StatusNotFound, model.Response{
+			Success: false,
+			Message: "User not found",
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, model.Response{
+		Success: true,
+		Message: "User found",
+		Results: user,
+	})
+}
+
 func UpdateProfileController(ctx *gin.Context) {
 	userIDVal, exists := ctx.Get("userID")
 	if !exists {
