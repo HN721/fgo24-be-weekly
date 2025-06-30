@@ -8,11 +8,11 @@ import (
 )
 
 type Transactions struct {
-	Amount int    `json:"amount"`
-	Status string `json:"status"`
-	Date   string `json:"date"`
-	Method string `json:"method"`
-	IdUser int
+	Amount int    `json:"amount" form:"amount" binding:"required"`
+	Status string `json:"status" form:"status" binding:"required"`
+	Date   string `json:"date" form:"date" binding:"required"`
+	Method string `json:"method" form:"method" binding:"required"`
+	IdUser int    `json:"idUser" form:"idUser" binding:"required"`
 }
 
 func CreateTransactions(id int, trans Transactions) error {
