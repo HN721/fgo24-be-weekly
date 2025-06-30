@@ -1,8 +1,10 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strconv"
 	"time"
 	"weekly1/model"
@@ -270,5 +272,52 @@ func ChangePasswordController(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, model.Response{
 		Success: true,
 		Message: "Password changed successfully",
+	})
+}
+func UpdateUserImageController(ctx *gin.Context) {
+	userIDValue, _ := ctx.Get("userID")
+
+	userID, ok := userIDValue.(int)
+	if !ok {
+		ctx.JSON(http.StatusBadRequest, model.Response{
+			Success: false,
+			Message: "Invalid userID format",
+		})
+		return
+	}
+	file, err := ctx.FormFile("image")
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, model.Response{
+			Success: false,
+			Message: "Image file is required",
+		})
+		return
+	}
+
+	filename := fmt.Sprintf("user_%d_%d%s", userID, time.Now().Unix(), filepath.Ext(file.Filename))
+	savePath := filepath.Join("uploads", filename)
+
+	if err := ctx.SaveUploadedFile(file, savePath); err != nil {
+		ctx.JSON(http.StatusInternalServerError, model.Response{
+			Success: false,
+			Message: "Failed to save image: " + err.Error(),
+		})
+		return
+	}
+
+	if err := model.UpdateUserImage(userID, savePath); err != nil {
+		ctx.JSON(http.StatusInternalServerError, model.Response{
+			Success: false,
+			Message: "Failed to update image: " + err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, model.Response{
+		Success: true,
+		Message: "Profile image updated successfully",
+		Results: map[string]string{
+			"image": savePath,
+		},
 	})
 }
