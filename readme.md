@@ -39,14 +39,14 @@ go run main.go
 
 ### Auth
 
-| Method | Endpoint                    | Description           |
-| ------ | --------------------------- | --------------------- |
-| POST   | `/auth/register`            | Register user         |
-| POST   | `/auth/login`               | Login user            |
-| GET    | `/auth/get-user`            | Get user data         |
-| GET    | `/auth/get-user?search=`    | Get user data by name |
-| PUT    | `/auth/update-profile/:id`  | Update user data      |
-| PUT    | `/auth/change-password/:id` | Update Password user  |
+| Method | Endpoint                 | Description           |
+| ------ | ------------------------ | --------------------- |
+| POST   | `/auth/register`         | Register user         |
+| POST   | `/auth/login`            | Login user            |
+| GET    | `/auth/get-user`         | Get user data         |
+| GET    | `/auth/get-user?search=` | Get user data by name |
+| PUT    | `/auth/update-profile/`  | Update user data      |
+| PUT    | `/auth/change-password/` | Update Password user  |
 
 ### Balance
 
