@@ -195,3 +195,16 @@ func ChangePassword(userID int, oldPass, newPass string) error {
 
 	return nil
 }
+func UpdateUserImage(userID int, imagePath string) error {
+	conn, err := utils.DBConnect()
+	if err != nil {
+		return err
+	}
+	defer conn.Conn().Close(context.Background())
+
+	_, err = conn.Exec(context.Background(),
+		`UPDATE users SET images = $1 WHERE id = $2`,
+		imagePath, userID,
+	)
+	return err
+}
