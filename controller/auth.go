@@ -28,7 +28,6 @@ func CreateToken(username string, id int) (string, error) {
 }
 func LoginController(ctx *gin.Context) {
 	var input model.Profile
-
 	err := ctx.ShouldBindJSON(&input)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, model.Response{

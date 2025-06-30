@@ -8,12 +8,12 @@ import (
 )
 
 type Historymodel struct {
-	IdHistory       int    `json:"idHistory"`
-	IdTransaction   int    `json:"idTransaction"`
-	Amount          int    `json:"amount"`
-	Status          string `json:"status"`
-	DateTransaction string `json:"dateTransaction"`
-	Method          string `json:"method"`
+	IdHistory       int    `json:"idHistory" form:"idHistory"`
+	IdTransaction   int    `json:"idTransaction" form:"idTransaction" binding:"required"`
+	Amount          int    `json:"amount" form:"amount" binding:"required"`
+	Status          string `json:"status" form:"status" binding:"required"`
+	DateTransaction string `json:"dateTransaction" form:"dateTransaction" binding:"required"`
+	Method          string `json:"method" form:"method" binding:"required"`
 }
 
 func CreateHistory(history Historymodel) error {
