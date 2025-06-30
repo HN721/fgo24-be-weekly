@@ -7,5 +7,5 @@ func CombineRouter(r *gin.Engine) {
 	pinRoute(r.Group("/auth/pin"))
 	balanceRouter(r.Group("/balance"))
 	transactionRoute(r.Group("/transaction"))
-	historyRoute(r.Group("/historys"))
+	historyRoute(r.Group("/history"))
 }

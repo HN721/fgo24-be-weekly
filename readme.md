@@ -39,14 +39,19 @@ go run main.go
 
 ### Auth
 
+| Method | Endpoint         | Description   |
+| ------ | ---------------- | ------------- |
+| POST   | `/auth/register` | Register user |
+| POST   | `/auth/login`    | Login user    |
+
+### Profile
+
 | Method | Endpoint                 | Description           |
 | ------ | ------------------------ | --------------------- |
-| POST   | `/auth/register`         | Register user         |
-| POST   | `/auth/login`            | Login user            |
-| GET    | `/auth/get-user`         | Get user data         |
-| GET    | `/auth/get-user?search=` | Get user data by name |
-| PUT    | `/auth/update-profile/`  | Update user data      |
-| PUT    | `/auth/change-password/` | Update Password user  |
+| GET    | `/user/get-user`         | Get user data         |
+| GET    | `/user/get-user?search=` | Get user data by name |
+| PUT    | `/user/profile`          | Update user data      |
+| PUT    | `/user/change-password`  | Update Password user  |
 
 ### Balance
 
@@ -57,17 +62,17 @@ go run main.go
 
 ### Transaction
 
-| Method | Endpoint                         | Description        |
-| ------ | -------------------------------- | ------------------ |
-| GET    | `/transaction/findTransactions`  | Get Transaction    |
-| POST   | `/transaction/createTransaction` | Create Transaction |
+| Method | Endpoint       | Description        |
+| ------ | -------------- | ------------------ |
+| GET    | `/transaction` | Get Transaction    |
+| POST   | `/transaction` | Create Transaction |
 
 ### History
 
-| Method | Endpoint                   | Description    |
-| ------ | -------------------------- | -------------- |
-| GET    | `/historys/getall-history` | Get History    |
-| POST   | `/historys/createHistory`  | Create History |
+| Method | Endpoint   | Description    |
+| ------ | ---------- | -------------- |
+| GET    | `/history` | Get History    |
+| POST   | `/history` | Create History |
 
 ## ERD E-WALLET
 

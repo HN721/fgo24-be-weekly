@@ -8,6 +8,6 @@ import (
 )
 
 func historyRoute(r *gin.RouterGroup) {
-	r.POST("/createHistory", middleware.AuthMiddleware(), controller.CreateHistory)
-	r.GET("/getall-history", middleware.AuthMiddleware(), controller.Gethistory)
+	r.POST("", middleware.AuthMiddleware(), controller.CreateHistory)
+	r.GET("", middleware.AuthMiddleware(), controller.Gethistory)
 }
