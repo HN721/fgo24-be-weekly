@@ -58,3 +58,33 @@ func TopUpController(ctx *gin.Context) {
 		Results: top,
 	})
 }
+func GetUserBalanceController(ctx *gin.Context) {
+	userIdValue, _ := ctx.Get("userID")
+
+	userId, ok := userIdValue.(int)
+	if !ok {
+		ctx.JSON(http.StatusBadRequest, model.Response{
+			Success: false,
+			Message: "Invalid userID format",
+		})
+		return
+	}
+
+	name, saldo, err := model.GetUserBalance(userId)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, model.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, model.Response{
+		Success: true,
+		Message: "User balance retrieved successfully",
+		Results: model.UserBalanceResponse{
+			Name:  name,
+			Saldo: saldo,
+		},
+	})
+}

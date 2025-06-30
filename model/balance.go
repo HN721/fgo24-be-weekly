@@ -7,15 +7,20 @@ import (
 	"weekly1/utils"
 )
 
+type UserBalanceResponse struct {
+	Name  string `json:"name"`
+	Saldo int    `json:"saldo"`
+}
+
 type Balances struct {
-	IdUser int    `json:"idUser" form:"idUser" binding:"required"`
-	Saldo  int    `json:"saldo" form:"saldo" binding:"required"`
-	Date   string `json:"date" form:"date" binding:"required"`
+	IdUser int    `json:"idUser" form:"idUser" `
+	Saldo  int    `json:"saldo" form:"saldo" `
+	Date   string `json:"date" form:"date" `
 }
 type TopUps struct {
-	Amount int `json:"amount" form:"amount" binding:"required"`
+	Amount int `json:"amount" form:"amount" `
 	UserID int
-	Date   time.Time `json:"date" form:"date" binding:"required"`
+	Date   time.Time `json:"date" form:"date" `
 }
 
 func Balance(id int, balanceUser Balances) error {
@@ -76,4 +81,27 @@ func TopUp(id int, topup TopUps) error {
 	}
 
 	return nil
+}
+func GetUserBalance(userID int) (string, int, error) {
+	conn, err := utils.DBConnect()
+	if err != nil {
+		return "", 0, fmt.Errorf("failed to connect to database: %w", err)
+	}
+	defer conn.Conn().Close(context.Background())
+
+	var name string
+	var saldo int
+
+	err = conn.QueryRow(context.Background(), `
+		SELECT u.name, b.saldo
+		FROM users u
+		JOIN balance b ON u.id = b.id_user
+		WHERE u.id = $1
+	`, userID).Scan(&name, &saldo)
+
+	if err != nil {
+		return "", 0, fmt.Errorf("failed to get user balance: %w", err)
+	}
+
+	return name, saldo, nil
 }

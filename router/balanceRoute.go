@@ -9,5 +9,7 @@ import (
 
 func balanceRouter(r *gin.RouterGroup) {
 	r.POST("", middleware.AuthMiddleware(), controller.BalanceController)
+	r.GET("", middleware.AuthMiddleware(), controller.GetUserBalanceController)
+
 	r.POST("/topup", middleware.AuthMiddleware(), controller.TopUpController)
 }

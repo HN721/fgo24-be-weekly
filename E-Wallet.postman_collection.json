@@ -17,7 +17,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"nanda\",\r\n    \"email\":\"nanda@gmail.com\",\r\n    \"image\":\"1.jpg\",\r\n    \"password\":\"123\"\r\n}",
+							"raw": "{\r\n    \"name\":\"nanda\",\r\n    \"email\":\"hosea12@gmail.com\",\r\n    \"images\":\"1.jpg\",\r\n    \"password\":\"123456\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -62,7 +62,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"admin@gmail.com\",\r\n    \"password\": \"123\"\r\n}",
+							"raw": "{\r\n    \"email\": \"hosea12@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -173,20 +173,13 @@
 					"name": "Saldo",
 					"request": {
 						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTEyOTYwNDgsImlkIjoxLCJ1c2VybmFtZSI6Imhvc2VhIn0.8289cuREmPmQGpXqWCNINENAAvpru_b2Wp0e73c-bnc",
-									"type": "string"
-								}
-							]
+							"type": "noauth"
 						},
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTEyOTUzNzMsImlkIjoxLCJ1c2VybmFtZSI6Imhvc2VhIn0.2q3pS_oGpT1zfBGUVFZ_V2Hch5WzqAJcV-Ta3_gGHTc",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTEzMzUxMjQsImlkIjoxLCJ1c2VybmFtZSI6Imhvc2VhIn0.twXPggwK7y2B1mW0LwccYjaVGpNCu8Lw2zA3WBgEyoI",
 								"type": "text"
 							}
 						],
@@ -199,6 +192,31 @@
 								}
 							}
 						},
+						"url": {
+							"raw": "http://localhost:8080/balance",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"balance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetSaldo",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTEzMzUxMjQsImlkIjoxLCJ1c2VybmFtZSI6Imhvc2VhIn0.twXPggwK7y2B1mW0LwccYjaVGpNCu8Lw2zA3WBgEyoI",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "http://localhost:8080/balance",
 							"protocol": "http",
@@ -230,15 +248,14 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/auth/get-user",
+							"raw": "http://localhost:8080/user",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"auth",
-								"get-user"
+								"user"
 							]
 						}
 					},
@@ -265,15 +282,15 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/auth/update-profile",
+							"raw": "http://localhost:8080/user/profile",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"auth",
-								"update-profile"
+								"user",
+								"profile"
 							]
 						}
 					},
@@ -300,15 +317,67 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/auth/change-password",
+							"raw": "http://localhost:8080/user/change-password",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"auth",
+								"user",
 								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserByid",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTEzODM3NDksImlkIjo5LCJ1c2VybmFtZSI6Im5hbmRhIn0.194v5Cm3Ujc1EmTXRsvCAzh97bqQs284hNMDS8kKYqo",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/user/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserByEmail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/user/email",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"email"
 							]
 						}
 					},

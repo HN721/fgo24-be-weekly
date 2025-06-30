@@ -72,9 +72,9 @@ func RegisterController(ctx *gin.Context) {
 	}
 	err = model.Register(input)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, model.Response{
+		ctx.JSON(http.StatusInternalServerError, model.Response{
 			Success: false,
-			Message: "Input Tidak Valid",
+			Message: "Cant Register data",
 		})
 		return
 	}
@@ -149,16 +149,9 @@ func GetUser(ctx *gin.Context) {
 	})
 }
 func GetUserById(ctx *gin.Context) {
-	userIdValue, exists := ctx.Get("userID")
-	if !exists {
-		ctx.JSON(http.StatusUnauthorized, model.Response{
-			Success: false,
-			Message: "Unauthorized: userID not found in context",
-		})
-		return
-	}
+	userIdValue, _ := ctx.Get("userID")
 
-	userIdStr, ok := userIdValue.(string)
+	userIdStr, ok := userIdValue.(int)
 	if !ok {
 		ctx.JSON(http.StatusBadRequest, model.Response{
 			Success: false,
@@ -167,16 +160,7 @@ func GetUserById(ctx *gin.Context) {
 		return
 	}
 
-	id, err := strconv.Atoi(userIdStr)
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, model.Response{
-			Success: false,
-			Message: "Invalid userID value",
-		})
-		return
-	}
-
-	user, err := model.FindOneUserById(id)
+	user, err := model.FindOneUserById(userIdStr)
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, model.Response{
 			Success: false,

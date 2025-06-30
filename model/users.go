@@ -8,9 +8,9 @@ import (
 
 type Profile struct {
 	Id       int    `json:"id" form:"id" `
-	Name     string `json:"name" form:"name" binding:"required"`
+	Name     string `json:"name" form:"name" `
 	Email    string `json:"email" form:"email" binding:"required,email"`
-	Images   string `json:"images" form:"images" binding:"required"`
+	Images   string `json:"images" form:"images"`
 	Password string `json:"password" form:"password" binding:"required,min=6"`
 }
 type PublicProfile struct {

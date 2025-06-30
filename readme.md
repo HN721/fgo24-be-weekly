@@ -61,6 +61,7 @@ go run main.go
 | ------ | ---------------- | ----------------- |
 | POST   | `/balance/topup` | Topup user Saldo  |
 | POST   | `/balance/`      | Create user Saldo |
+| GET    | `/balance/`      | Show user Saldo   |
 
 ### Transaction
 
