@@ -8,14 +8,14 @@ import (
 )
 
 type Balances struct {
-	IdUser int    `json:"idUser"`
-	Saldo  int    `json:"saldo"`
-	Date   string `json:"date"`
+	IdUser int    `json:"idUser" form:"idUser" binding:"required"`
+	Saldo  int    `json:"saldo" form:"saldo" binding:"required"`
+	Date   string `json:"date" form:"date" binding:"required"`
 }
 type TopUps struct {
-	Amount int `json:"amount"`
+	Amount int `json:"amount" form:"amount" binding:"required"`
 	UserID int
-	Date   time.Time `json:"date"`
+	Date   time.Time `json:"date" form:"date" binding:"required"`
 }
 
 func Balance(id int, balanceUser Balances) error {

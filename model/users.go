@@ -9,7 +9,7 @@ import (
 )
 
 type Profile struct {
-	Id       int    `json:"id"`
+	Id       int    `json:"id" form:"id" required`
 	Name     string `json:"name"`
 	Email    string `json:"email"`
 	Images   string `json:"images"`

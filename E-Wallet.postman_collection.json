@@ -1,0 +1,443 @@
+{
+	"info": {
+		"_postman_id": "278f745e-159c-4326-aa94-1ce5ac2dd6dd",
+		"name": "E-Wallet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32691128",
+		"_collection_link": "https://lunar-meteor-887992.postman.co/workspace/E-Wallet-Koda~f593024b-852f-470b-80b3-b37d8d93efb0/collection/32691128-278f745e-159c-4326-aa94-1ce5ac2dd6dd?action=share&source=collection_link&creator=32691128"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"nanda\",\r\n    \"email\":\"nanda@gmail.com\",\r\n    \"image\":\"1.jpg\",\r\n    \"password\":\"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTEwMDYzMTgsImlkIjoiaG9zZWEiLCJ1c2VybmFtZSI6Imhvc2VhIn0.hlRQ9BmwyMoSrmqjO2IQuDgsBtLi-Jj8WrCZ0OQAG1Hw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTEwMDYzNDQsImlkIjoiaG9zZWEiLCJ1c2VybmFtZSI6Imhvc2VhIn0.w5-d5PihN9FTgZjy86nKNrG8RoD0IO8tPtk_pnwLwq8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@gmail.com\",\r\n    \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PIN",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTEwMDYzMTgsImlkIjoiaG9zZWEiLCJ1c2VybmFtZSI6Imhvc2VhIn0.hlRQ9BmwyMoSrmqjO2IQuDgsBtLi-Jj8WrCZ0OQAG1Hw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTEwMDYzNDQsImlkIjoiaG9zZWEiLCJ1c2VybmFtZSI6Imhvc2VhIn0.w5-d5PihN9FTgZjy86nKNrG8RoD0IO8tPtk_pnwLwq8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@gmail.com\",\r\n    \"password\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Balance",
+			"item": [
+				{
+					"name": "TopUp",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTEzMzUxMjQsImlkIjoxLCJ1c2VybmFtZSI6Imhvc2VhIn0.twXPggwK7y2B1mW0LwccYjaVGpNCu8Lw2zA3WBgEyoI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\":50000,\r\n    \"date\":\"2025-30-06\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/balance/topup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"balance",
+								"topup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Saldo",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTEyOTYwNDgsImlkIjoxLCJ1c2VybmFtZSI6Imhvc2VhIn0.8289cuREmPmQGpXqWCNINENAAvpru_b2Wp0e73c-bnc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTEyOTUzNzMsImlkIjoxLCJ1c2VybmFtZSI6Imhvc2VhIn0.2q3pS_oGpT1zfBGUVFZ_V2Hch5WzqAJcV-Ta3_gGHTc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"saldo\": 2000,\r\n    \"date\": \"2025-06-26\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/balance",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"balance"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "GetUser",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTEzMzUxMjQsImlkIjoxLCJ1c2VybmFtZSI6Imhvc2VhIn0.twXPggwK7y2B1mW0LwccYjaVGpNCu8Lw2zA3WBgEyoI",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/auth/get-user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"get-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateProfile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTEzMzUxMjQsImlkIjoxLCJ1c2VybmFtZSI6Imhvc2VhIn0.twXPggwK7y2B1mW0LwccYjaVGpNCu8Lw2zA3WBgEyoI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"nanda\",\r\n    \"email\":\"nand123@gmail.com\",\r\n    \"image\":\"1.jpg\",\r\n    \"password\":\"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/update-profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"update-profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ChangePassword",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTEzMzUxMjQsImlkIjoxLCJ1c2VybmFtZSI6Imhvc2VhIn0.twXPggwK7y2B1mW0LwccYjaVGpNCu8Lw2zA3WBgEyoI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"old_password\":\"123\",\r\n    \"new_password\":12345\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/change-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "GetTransaction",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTEzMzUxMjQsImlkIjoxLCJ1c2VybmFtZSI6Imhvc2VhIn0.twXPggwK7y2B1mW0LwccYjaVGpNCu8Lw2zA3WBgEyoI",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/transaction/findTransactions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transaction",
+								"findTransactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateTransaction",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTEzMzUxMjQsImlkIjoxLCJ1c2VybmFtZSI6Imhvc2VhIn0.twXPggwK7y2B1mW0LwccYjaVGpNCu8Lw2zA3WBgEyoI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\":20000,\r\n    \"status\":\"Sucess\",\r\n    \"date\" :\"2024-30-06\",\r\n    \"method\":\"Qris\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/transaction/createTransaction",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"transaction",
+								"createTransaction"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "History",
+			"item": [
+				{
+					"name": "GetHistory",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTEzMzUxMjQsImlkIjoxLCJ1c2VybmFtZSI6Imhvc2VhIn0.twXPggwK7y2B1mW0LwccYjaVGpNCu8Lw2zA3WBgEyoI",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/historys/getall-history",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"historys",
+								"getall-history"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateHistory",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTEzMzUxMjQsImlkIjoxLCJ1c2VybmFtZSI6Imhvc2VhIn0.twXPggwK7y2B1mW0LwccYjaVGpNCu8Lw2zA3WBgEyoI",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/historys/createHistory",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"historys",
+								"createHistory"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

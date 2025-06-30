@@ -12,7 +12,7 @@ type Transactions struct {
 	Status string `json:"status"`
 	Date   string `json:"date"`
 	Method string `json:"method"`
-	IdUser int    `json:"id_user"`
+	IdUser int
 }
 
 func CreateTransactions(id int, trans Transactions) error {

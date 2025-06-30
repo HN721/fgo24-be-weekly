@@ -9,5 +9,5 @@ import (
 
 func historyRoute(r *gin.RouterGroup) {
 	r.POST("/createHistory", middleware.AuthMiddleware(), controller.CreateHistory)
-	r.POST("/getall-history", middleware.AuthMiddleware(), controller.Gethistory)
+	r.GET("/getall-history", middleware.AuthMiddleware(), controller.Gethistory)
 }
