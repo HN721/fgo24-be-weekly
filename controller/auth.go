@@ -100,9 +100,9 @@ func PinController(ctx *gin.Context) {
 	userId, _ := ctx.Get("userID")
 	err = model.CreatePin(userId.(int), pin)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, model.Response{
+		ctx.JSON(http.StatusInternalServerError, model.Response{
 			Success: false,
-			Message: "Invalid Pin",
+			Message: "Failed create Pin",
 		})
 		return
 	}
@@ -178,7 +178,6 @@ func GetUserById(ctx *gin.Context) {
 	})
 }
 
-// GET /users/email?email=nanda@gmail.com
 func GetUserByEmail(ctx *gin.Context) {
 	email := ctx.Query("email")
 	if email == "" {
